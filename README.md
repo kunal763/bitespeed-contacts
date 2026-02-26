@@ -53,8 +53,8 @@ Identifies and consolidates customer contact information.
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd bitespeed-identity-reconciliation
+git clone https://github.com/kunal763/bitespeed-contacts.git
+cd bitespeed-contacts
 ```
 
 2. Install dependencies:
@@ -62,18 +62,13 @@ cd bitespeed-identity-reconciliation
 npm install
 ```
 
-3. Create a `.env` file:
-```bash
-cp .env.example .env
-```
-
-4. Update `.env` with your database credentials:
+3. Create a `.env` file with your database credentials:
 ```
 PORT=3000
 DATABASE_URL=postgresql://user:password@localhost:5432/bitespeed
 ```
 
-5. Run the development server:
+4. Run the development server:
 ```bash
 npm run dev
 ```
@@ -119,22 +114,6 @@ curl -X POST http://localhost:3000/identify \
   -H "Content-Type: application/json" \
   -d '{"email":"george@hillvalley.edu","phoneNumber":"717171"}'
 ```
-
-## Deployment
-
-This service is deployed on Render.com.
-
-**Live Endpoint:** `[Your Render URL will go here]`
-
-### Deploy to Render
-
-1. Push your code to GitHub
-2. Create a new Web Service on Render.com
-3. Connect your GitHub repository
-4. Add PostgreSQL database (Render provides free tier)
-5. Set environment variables:
-   - `DATABASE_URL` (automatically set by Render when you add PostgreSQL)
-6. Deploy!
 
 ## Database Schema
 
