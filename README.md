@@ -41,6 +41,54 @@ Identifies and consolidates customer contact information.
   }
 }
 ```
+## Live Deployment
+
+**Deployed on:** Render.com  
+**Live Endpoint:** https://bitespeed-identity-service-e9t2.onrender.com
+
+### Test the Live API
+
+
+
+**Live Endpoint:** https://bitespeed-identity-service-e9t2.onrender.com
+
+### Example 1: New Contact
+```bash
+curl -X POST https://bitespeed-identity-service-e9t2.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"lorraine@hillvalley.edu","phoneNumber":"123456"}'
+```
+
+### Example 2: Linking Contacts
+```bash
+curl -X POST https://bitespeed-identity-service-e9t2.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"mcfly@hillvalley.edu","phoneNumber":"123456"}'
+```
+
+### Example 3: Merging Primary Contacts
+```bash
+# First create two separate primaries
+curl -X POST https://bitespeed-identity-service-e9t2.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"george@hillvalley.edu","phoneNumber":"919191"}'
+
+curl -X POST https://bitespeed-identity-service-e9t2.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"biffsucks@hillvalley.edu","phoneNumber":"717171"}'
+
+# Then link them
+curl -X POST https://bitespeed-identity-service-e9t2.onrender.com/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email":"george@hillvalley.edu","phoneNumber":"717171"}'
+```
+
+### Health Check
+```bash
+curl https://bitespeed-identity-service-e9t2.onrender.com/health
+```
+
+**Note:** Free tier services on Render spin down after 15 minutes of inactivity. The first request may take 30-60 seconds (cold start).
 
 ## Local Development
 
@@ -82,39 +130,6 @@ npm run build
 npm start
 ```
 
-## Testing the API
-
-### Example 1: New Contact
-```bash
-curl -X POST http://localhost:3000/identify \
-  -H "Content-Type: application/json" \
-  -d '{"email":"lorraine@hillvalley.edu","phoneNumber":"123456"}'
-```
-
-### Example 2: Linking Contacts
-```bash
-curl -X POST http://localhost:3000/identify \
-  -H "Content-Type: application/json" \
-  -d '{"email":"mcfly@hillvalley.edu","phoneNumber":"123456"}'
-```
-
-### Example 3: Merging Primary Contacts
-```bash
-# First create two separate primaries
-curl -X POST http://localhost:3000/identify \
-  -H "Content-Type: application/json" \
-  -d '{"email":"george@hillvalley.edu","phoneNumber":"919191"}'
-
-curl -X POST http://localhost:3000/identify \
-  -H "Content-Type: application/json" \
-  -d '{"email":"biffsucks@hillvalley.edu","phoneNumber":"717171"}'
-
-# Then link them
-curl -X POST http://localhost:3000/identify \
-  -H "Content-Type: application/json" \
-  -d '{"email":"george@hillvalley.edu","phoneNumber":"717171"}'
-```
-
 ## Database Schema
 
 ```sql
@@ -136,5 +151,7 @@ CREATE TABLE contact (
 2. **Single Match**: Check if new info exists; create secondary if needed
 3. **Multiple Primaries**: Merge by making older one primary, others secondary
 4. **Response**: Consolidate all linked contacts under oldest primary
+
+
 
 
